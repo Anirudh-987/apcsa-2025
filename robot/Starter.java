@@ -17,9 +17,9 @@ public class Starter implements Directions{
     Robot rob = new Robot(20,5,South,90);
     Robot rob2 = new Robot(20, 5, South, 90);
     // Want a second robot?  No prob.  They are cheap :)
-    Robot rob3 = new Robot(5,15,West,90);
-    Robot rob4 = new Robot(5,15, West, 90);
-    Robot rob5 = new Robot(10,7, East, 90);
+    Robot rob3 = new Robot(5,15,North,90);
+    Robot rob4 = new Robot(5,15, North, 90);
+    Robot rob5 = new Robot(10,2, East, 90);
     // examples of commands you can invoke on a Robot
     // move one step in the direction it is facing
 
@@ -57,11 +57,30 @@ public class Starter implements Directions{
     rob5.putBeeper();
     rob5.move();
   
-    for (int j=0, j < 6, i++)  {
+    for (int j=0; j < 6; j++)  {
       
 
+      rob3.putBeeper();
+      rob3.move();
+      rob3.putBeeper();
+      rob3.move();
+      rob3.move();
+      rob3.turnLeft();
+      rob3.turnLeft();
+      rob3.turnLeft();
+      rob3.move();
+      rob3.putBeeper();
 
-
+      rob4.move();
+      rob4.putBeeper();
+      rob4.move();
+      rob4.move();
+      rob4.turnLeft();
+      rob4.move();
+      rob4.putBeeper();
+      rob4.turnLeft();
+      rob4.turnLeft();
+      rob4.turnLeft();
     }
     // done with the line, now on the curve
     // rob.turnLeft();
