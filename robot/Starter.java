@@ -17,7 +17,7 @@ public class Starter implements Directions{
     Robot rob1 = new Robot(5,15,North,90);
     
 
-     for (int i=0; i < 4; i++)  {
+     for (int i=0; i < 4; i++)  { 
     rob1.putBeeper();
     rob1.move();
     rob1.turnLeft();
@@ -47,4 +47,15 @@ public class Starter implements Directions{
 
   }
 
+}
+
+
+
+system.out.println(5*5);
+
+for (double x=0; x < 5; i++)  {
+
+
+
+  
 }
