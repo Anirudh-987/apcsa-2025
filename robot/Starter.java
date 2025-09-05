@@ -14,12 +14,37 @@ public class Starter implements Directions{
     // The line below creates a Robot that we will refer to as rob
     // Find out what the numbers and direction do!
     // Put rob in a better location for your initials.
-    Robot rob1 = new Robot(20,5,South,90);
+    Robot rob1 = new Robot(5,15,North,90);
     
+
+     for (int i=0; i < 4; i++)  {
+    rob1.putBeeper();
+    rob1.move();
+    rob1.turnLeft();
+    rob1.move();
+     rob1.putBeeper();
+    rob1.move();
+    rob1.turnLeft();
+    rob1.turnLeft();
+    rob1.turnLeft();
+    rob1.move();
+    rob1.putBeeper();
+    rob1.move();
+    rob1.turnLeft();
+    rob1.move();
+    rob1.putBeeper();
+    rob1.move();
+    rob1.turnLeft();
+    rob1.turnLeft();
+    rob1.turnLeft();
+    rob1.move();
+
+    rob1.turnLeft();
+  
+    
+     }
+
 
   }
 
 }
-
-// stupid rob1 refuses to follow commands after initial "for" loop and I don't know why
-// just sitting their being ugly after every other bot leaves
