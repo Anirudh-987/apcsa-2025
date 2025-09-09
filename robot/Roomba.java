@@ -23,8 +23,7 @@ public class Roomba implements Directions {
 
 	public int cleanRoom(String worldName, int startX, int startY) {
 
-		// A new Robot should be constructed and assigned to the global (instance) variable named roomba that is declared above.
-        // Make sure it starts at startX and startY location.
+		Robot rob1 = new Robot(startX,startY,North,0);
 
 		World.readWorld(worldName);
 		World.setVisible(true);
