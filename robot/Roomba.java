@@ -28,19 +28,48 @@ public class Roomba implements Directions {
 		World.readWorld(worldName);
 		World.setVisible(true);
 
-
-		/** This section will have all the logic that takes the Robot to every location
-		 * and cleans up all piles of beepers. Think about ways you can break this
-		 * large, complex task into smaller, easier to solve problems.
-		 */
-
-		// the line below causes a null pointer exception
-		// what is that and why are we getting it?
-		roomba.move();
+		boolean dirty = true;
+		while (dirty) {
 
 
-		int totalBeepers = 0; // Need to move this somewhere else.
+			while (roomba.frontIsClear()) {
+
+			roomba.move();
+
+			if (roomba.facingEast()) {
+				roomba.turnLeft();
+				roomba.move();
+				roomba.turnLeft();
+			}
+			else {
+				roomba.turnLeft();
+				roomba.turnLeft();
+				roomba.turnLeft();
+				roomba.move();
+				roomba.turnLeft();
+				roomba.turnLeft();
+				roomba.turnLeft();
+				// idk how to make a turn right command will that mess up robot plugin?
+				
+			}
+
+		}
+		
+		
+
+		}
+		
+		
+
+		
+		
+
+
+		
+	}
+
+int totalBeepers = 0; // Need to move this somewhere else.
         // This method should return the total number of beepers cleaned up.
 		return totalBeepers;
-	}
+	
 }
