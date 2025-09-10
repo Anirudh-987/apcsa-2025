@@ -18,7 +18,6 @@ public class Roomba implements Directions {
 	// declared here so it is visible in all the methods!
 	private Robot roomba;
 
-	// You will need to add many variables!!
 
 
 	public int cleanRoom(String worldName, int startX, int startY) {
@@ -27,8 +26,65 @@ public class Roomba implements Directions {
 
 		World.readWorld(worldName);
 		World.setVisible(true);
+		// section start - code to move it to starting point
 
+		if (roomba.facingNorth()) {
+			roomba.turnLeft();
+			while (roomba.frontIsClear())  {
+				roomba.move();
+			}
+			roomba.turnLeft();
+			while (roomba.frontIsClear())  {
+				roomba.move();
+			}
+			roomba.turnLeft();
+			roomba.turnLeft();
+		}
+		if (roomba.facingSouth()) {
+			
+			while (roomba.frontIsClear())  {
+				roomba.move();
+			}
+			roomba.turnLeft();
+			roomba.turnLeft();
+			roomba.turnLeft();
+			while (roomba.frontIsClear())  {
+				roomba.move();
+			}
+			roomba.turnLeft();
+			roomba.turnLeft();
+			roomba.turnLeft();
+		}
+		if (roomba.facingEast()) {
+			roomba.turnLeft();
+			roomba.turnLeft();
+			while (roomba.frontIsClear())  {
+				roomba.move();
+			}
+			roomba.turnLeft();
+			while (roomba.frontIsClear())  {
+				roomba.move();
+			}
+			roomba.turnLeft();
+			roomba.turnLeft();
+		}
+		if (roomba.facingWest()) {
+			while (roomba.frontIsClear())  {
+				roomba.move();
+			}
+			roomba.turnLeft();
+			while (roomba.frontIsClear())  {
+				roomba.move();
+			}
+			roomba.turnLeft();
+			roomba.turnLeft();
+		}
+
+		// section end
+
+		//section start - code for zigzag
 		boolean dirty = true;
+
 		while (dirty) {
 
 
