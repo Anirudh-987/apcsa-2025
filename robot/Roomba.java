@@ -20,7 +20,7 @@ public class Roomba implements Directions {
 
 
 
-	public int cleanRoom(String worldName, int startX, int startY) {
+	public int cleanRoom(String worldName, int 1, int 1) {
 
 		Robot rob1 = new Robot(startX,startY,North,0);
 
@@ -124,8 +124,6 @@ public class Roomba implements Directions {
 		
 	}
 
-int totalBeepers = 0; // Need to move this somewhere else.
-        // This method should return the total number of beepers cleaned up.
-		return totalBeepers;
+
 	
 }
