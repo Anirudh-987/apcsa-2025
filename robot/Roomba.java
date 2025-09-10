@@ -18,15 +18,17 @@ public class Roomba implements Directions {
 	// declared here so it is visible in all the methods!
 	private Robot roomba;
 
+// All changes below
 
+	public int cleanRoom(String worldName, int startX, int startY) {
 
-	public int cleanRoom(String worldName, int 1, int 1) {
-
-		Robot rob1 = new Robot(startX,startY,North,0);
+		Robot rob1 = new Robot(X,Y,North,0);
+		int beepersInPossession = 0;
+		int distanceTraveled_area = 0;
 
 		World.readWorld(worldName);
 		World.setVisible(true);
-		// section start - code to move it to starting point
+		// section start - code to move it to a predictable starting point
 
 		if (roomba.facingNorth()) {
 			roomba.turnLeft();
@@ -85,35 +87,35 @@ public class Roomba implements Directions {
 		//section start - code for zigzag
 		boolean dirty = true;
 
-		while (dirty) {
+		while (dirty = true) {
 
 
 			while (roomba.frontIsClear()) {
-
+				while (roomba.nextToABeeper()) {
+					totalBeepersPicked++;
+					roomba.pickBeeper();
+				}
+				distanceTraveled_area++;
+				roomba.move();
+			}
+			
+			roomba.turnLeft();
+			roomba.turnLeft();
+			roomba.turnLeft();
 			roomba.move();
-
-			if (roomba.facingEast()) {
-				roomba.turnLeft();
-				roomba.move();
-				roomba.turnLeft();
-			}
-			else {
-				roomba.turnLeft();
-				roomba.turnLeft();
-				roomba.turnLeft();
-				roomba.move();
-				roomba.turnLeft();
-				roomba.turnLeft();
-				roomba.turnLeft();
-				// idk how to make a turn right command will that mess up robot plugin?
+			roomba.turnLeft();
+			roomba.turnLeft();
+			roomba.turnLeft();
+			// idk how to make a turn right command will that mess up robot plugin?
 				
-			}
+			
 
 		}
 		
 		
 
-		}
+		return beepersInPossession;
+		return distanceTraveled_area;
 		
 		
 
