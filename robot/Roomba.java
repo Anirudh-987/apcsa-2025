@@ -99,7 +99,7 @@ public class Roomba implements Directions {
 				distanceTraveled_area++;
 				rob1.move();
 			}
-			if (rob1.facingNorth()) {
+			if (rob1.facingNorth() && rob1.frontIsClear() == false) {
 			rob1.turnLeft();
 			rob1.turnLeft();
 			rob1.turnLeft();
@@ -111,7 +111,7 @@ public class Roomba implements Directions {
 
 			}
 
-			if (rob1.facingSouth()) {
+			if (rob1.facingSouth() && rob1.frontIsClear() == false) {
 			rob1.turnLeft();
 			
 
@@ -126,7 +126,7 @@ public class Roomba implements Directions {
 
 		}
 		
-		
+	
 
 		System.out.println("Beepers collected: " + beepersInPossession);
 		System.out.println("Area: " + distanceTraveled_area);
