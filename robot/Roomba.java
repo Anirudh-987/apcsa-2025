@@ -12,7 +12,7 @@ public class Roomba implements Directions {
 		Roomba cleaner = new Roomba();
 		int totalBeepers = cleaner.cleanRoom(worldName, 7, 6);
 		System.out.println("Roomba cleaned up a total of " + totalBeepers + " beepers.");
-
+	
 	}
 
 	// declared here so it is visible in all the methods!
@@ -22,64 +22,65 @@ public class Roomba implements Directions {
 
 	public int cleanRoom(String worldName, int startX, int startY) {
 
-		Robot rob1 = new Robot(X,Y,North,0);
+		Robot rob1 = new Robot(7,6,North,0);
 		int beepersInPossession = 0;
 		int distanceTraveled_area = 0;
+		World.setDelay(5);
 
 		World.readWorld(worldName);
 		World.setVisible(true);
 		// section start - code to move it to a predictable starting point
 
-		if (roomba.facingNorth()) {
-			roomba.turnLeft();
-			while (roomba.frontIsClear())  {
-				roomba.move();
+		if (rob1.facingNorth()) {
+			rob1.turnLeft();
+			while (rob1.frontIsClear())  {
+				rob1.move();
 			}
-			roomba.turnLeft();
-			while (roomba.frontIsClear())  {
-				roomba.move();
+			rob1.turnLeft();
+			while (rob1.frontIsClear())  {
+				rob1.move();
 			}
-			roomba.turnLeft();
-			roomba.turnLeft();
+			rob1.turnLeft();
+			rob1.turnLeft();
 		}
-		if (roomba.facingSouth()) {
+		if (rob1.facingSouth()) {
 			
-			while (roomba.frontIsClear())  {
-				roomba.move();
+			while (rob1.frontIsClear())  {
+				rob1.move();
 			}
-			roomba.turnLeft();
-			roomba.turnLeft();
-			roomba.turnLeft();
-			while (roomba.frontIsClear())  {
-				roomba.move();
+			rob1.turnLeft();
+			rob1.turnLeft();
+			rob1.turnLeft();
+			while (rob1.frontIsClear())  {
+				rob1.move();
 			}
-			roomba.turnLeft();
-			roomba.turnLeft();
-			roomba.turnLeft();
+			rob1.turnLeft();
+			rob1.turnLeft();
+			rob1.turnLeft();
 		}
-		if (roomba.facingEast()) {
-			roomba.turnLeft();
-			roomba.turnLeft();
-			while (roomba.frontIsClear())  {
-				roomba.move();
+		if (rob1.facingEast()) {
+			rob1.turnLeft();
+			rob1.turnLeft();
+			while (rob1.frontIsClear())  {
+				rob1.move();
 			}
-			roomba.turnLeft();
-			while (roomba.frontIsClear())  {
-				roomba.move();
+			rob1.turnLeft();
+			while (rob1.frontIsClear())  {
+				rob1.move();
 			}
-			roomba.turnLeft();
-			roomba.turnLeft();
+			rob1.turnLeft();
+			rob1.turnLeft();
 		}
-		if (roomba.facingWest()) {
-			while (roomba.frontIsClear())  {
-				roomba.move();
+		if (rob1.facingWest()) {
+			while (rob1.frontIsClear())  {
+				rob1.move();
 			}
-			roomba.turnLeft();
-			while (roomba.frontIsClear())  {
-				roomba.move();
+			rob1.turnLeft();
+			while (rob1.frontIsClear())  {
+				rob1.move();
 			}
-			roomba.turnLeft();
-			roomba.turnLeft();
+			rob1.turnLeft();
+			rob1.turnLeft();
 		}
 
 		// section end
@@ -90,22 +91,35 @@ public class Roomba implements Directions {
 		while (dirty = true) {
 
 
-			while (roomba.frontIsClear()) {
-				while (roomba.nextToABeeper()) {
-					totalBeepersPicked++;
-					roomba.pickBeeper();
+			while (rob1.frontIsClear()) {
+				while (rob1.nextToABeeper()) {
+					beepersInPossession++;
+					rob1.pickBeeper();
 				}
 				distanceTraveled_area++;
-				roomba.move();
+				rob1.move();
 			}
+			if (rob1.facingNorth()) {
+			rob1.turnLeft();
+			rob1.turnLeft();
+			rob1.turnLeft();
+
+			rob1.move();
+			rob1.turnLeft();
+			rob1.turnLeft();
+			rob1.turnLeft();
+
+			}
+
+			if (rob1.facingSouth()) {
+			rob1.turnLeft();
 			
-			roomba.turnLeft();
-			roomba.turnLeft();
-			roomba.turnLeft();
-			roomba.move();
-			roomba.turnLeft();
-			roomba.turnLeft();
-			roomba.turnLeft();
+
+			rob1.move();
+			
+			rob1.turnLeft();
+
+			}
 			// idk how to make a turn right command will that mess up robot plugin?
 				
 			
@@ -114,10 +128,10 @@ public class Roomba implements Directions {
 		
 		
 
+		System.out.println("Beepers collected: " + beepersInPossession);
+		System.out.println("Area: " + distanceTraveled_area);
+		
 		return beepersInPossession;
-		return distanceTraveled_area;
-		
-		
 
 		
 		
