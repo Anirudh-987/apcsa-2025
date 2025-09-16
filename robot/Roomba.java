@@ -7,7 +7,7 @@ public class Roomba implements Directions {
 	// Main method to make this self-contained
 	public static void main(String[] args) {
 		// LEAVE THIS ALONE!!!!!!
-		String worldName = "robot/TestWorld-2.wld";
+		String worldName = "robot/finalTestWorld2024.wld";
 
 		Roomba cleaner = new Roomba();
 		int totalBeepers = cleaner.cleanRoom(worldName, 7, 6);
@@ -21,15 +21,15 @@ public class Roomba implements Directions {
 // All changes below
 
 	public int cleanRoom(String worldName, int startX, int startY) {
-
-		Robot rob1 = new Robot(25,30,North,0);
+		// arbitrary starting location just guessed to put it in the box
+		Robot rob1 = new Robot(40,150,East,0);
 		int beepersInPossession = 0;
 		int distanceTraveled_area = 0;
 		int largestPile = 0;
 		int beepersInPile = 0;
 		int largestPileLocationX = 0;
 		int largestPileLocationY = 0;
-		World.setDelay(5);
+		World.setDelay(0);
 
 		World.readWorld(worldName);
 		World.setVisible(true);
@@ -107,28 +107,70 @@ public class Roomba implements Directions {
 				rob1.move();
 				if (beepersInPile > largestPile) {
 					largestPile = beepersInPile;
-					int largestPileLocationX = roomba.avenue();
-					int largestPileLocationY = roomba.street();
+					largestPileLocationX = rob1.avenue();
+					largestPileLocationY = rob1.street();
 				}
 				beepersInPile = 0;
 			}
 			//turning around and moving downards
 			if (rob1.facingNorth() && rob1.frontIsClear() == false) {
+				//next is stuff to pick up beepers on edge
+				while (rob1.nextToABeeper()) {
+					beepersInPossession++;
+					beepersInPile++;
+					rob1.pickBeeper();
+				}
+				distanceTraveled_area++;
+				if (beepersInPile > largestPile) {
+					largestPile = beepersInPile;
+					largestPileLocationX = rob1.avenue();
+					largestPileLocationY = rob1.street();
+				}
+				beepersInPile = 0;
 			rob1.turnLeft();
 			rob1.turnLeft();
 			rob1.turnLeft();
-
+			// to prevent crashing
+			if (rob1.frontIsClear() == false) {
+				System.out.println("Beepers collected: " + beepersInPossession);
+				System.out.println("Area: " + distanceTraveled_area);
+				System.out.println("The largest pile had " + largestPile + "beepers in it.");
+				System.out.println("The coordinates of the largest pile are (" + largestPileLocationX + ", " + largestPileLocationY + ").");
+		
+				rob1.turnOff();
+			}
 			rob1.move();
 			rob1.turnLeft();
 			rob1.turnLeft();
 			rob1.turnLeft();
 
 			}
+	
 			// turning arounds and moving upwards
 			if (rob1.facingSouth() && rob1.frontIsClear() == false) {
-			rob1.turnLeft();
-			
+				//next is code to get beepers on edges
+				while (rob1.nextToABeeper()) {
+					beepersInPossession++;
+					beepersInPile++;
+					rob1.pickBeeper();
+				}
+				distanceTraveled_area++;
+				if (beepersInPile > largestPile) {
+					largestPile = beepersInPile;
+					largestPileLocationX = rob1.avenue();
+					largestPileLocationY = rob1.street();
+				}
+				beepersInPile = 0;
+				rob1.turnLeft();
+			// to prevent crashing
+			if (rob1.frontIsClear() == false) {
+				System.out.println("Beepers collected: " + beepersInPossession);
+				System.out.println("Area: " + distanceTraveled_area);
+				System.out.println("The largest pile had " + largestPile + "beepers in it.");
+				System.out.println("The coordinates of the largest pile are (" + largestPileLocationX + ", " + largestPileLocationY + ").");
 
+				rob1.turnOff();
+			}
 			rob1.move();
 			
 			rob1.turnLeft();
@@ -141,15 +183,9 @@ public class Roomba implements Directions {
 		}
 		
 	
-		// I don't know how to check where the output occurs.
-		System.out.println("Beepers collected: " + beepersInPossession);
-		System.out.println("Area: " + distanceTraveled_area);
-		System.out.println("The largest pile had " + largestPile + "beepers in it.");
-		System.out.println("The coordinates of the largest pile are (" + largestPileLocationX + ", " + largestPileLocationY + ").");
+		// return statement - arbitrary integer
 		
-
-		
-		
+		return beepersInPossession;
 
 
 		
