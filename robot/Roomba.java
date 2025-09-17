@@ -191,7 +191,7 @@ public class Roomba implements Directions {
 				System.out.println("There were " + amountOfPiles + " piles.");
 				System.out.println("The average amount of beepers per pile was " + (beepersInPossession/amountOfPiles) + ".");
 				System.out.println("Piles covered " + (amountOfPiles/8700) + "% of the map.");
-				System.out.println("The robot is (" + (rob1.avenue()-largestPileLocationX) + "units to the right of the largest pile and " + (rob1.street() - largestPileLocationY) + " units above the largest pile.");
+				System.out.println("The robot is " + (rob1.avenue()-largestPileLocationX) + " units to the right of the largest pile and " + (largestPileLocationY - rob1.street()) + " units below the largest pile.");
 				// to prevent crashing but it doesnt really matter because i moved the print code above
 				rob1.turnOff();
 			}
