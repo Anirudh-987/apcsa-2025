@@ -45,8 +45,8 @@ public class PigLatinTranslator {
 }
     
 
-    private static String translateWord(String input) {
-       if (input == null || input.isEmpty()) return input;
+   private static String translateWord(String input) {
+    if (input == null || input.isEmpty()) return input;
 
     // Extract punctuation at the end
     String punctuation = "";
@@ -55,12 +55,17 @@ public class PigLatinTranslator {
         input = input.substring(0, input.length() - 1);
     }
 
+    // Remember if first letter was capitalized
     boolean capitalized = Character.isUpperCase(input.charAt(0));
+
+    // Work in lowercase
     String word = input.toLowerCase();
     String vowels = "aeiou";
+    String pig;
 
+    // Translate to Pig Latin
     if (vowels.indexOf(word.charAt(0)) != -1) {
-        word = word + "ay";  // vowel-start words
+        pig = word + "ay";  // vowel-start words
     } else {
         int firstVowelIndex = -1;
         for (int i = 0; i < word.length(); i++) {
@@ -71,21 +76,20 @@ public class PigLatinTranslator {
         }
 
         if (firstVowelIndex == -1) {
-            word = word + "ay";  // no vowel
+            pig = word + "ay";  // no vowels
         } else {
             String start = word.substring(0, firstVowelIndex);
             String end = word.substring(firstVowelIndex);
-            word = end + start + "ay";
+            pig = end + start + "ay";
         }
     }
 
-    // Restore capitalization
+    // Capitalize first letter if needed
     if (capitalized) {
-        word = Character.toUpperCase(word.charAt(0)) + word.substring(1);
+        pig = Character.toUpperCase(pig.charAt(0)) + pig.substring(1);
     }
 
     // Reattach punctuation
-    return word + punctuation;
+    return pig + punctuation;
 }
-
 }
