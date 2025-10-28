@@ -2,41 +2,82 @@ package piglatin;
 
 public class PigLatinTranslator {
     public static Book translate(Book input) {
-        Book translatedBook = new Book();
+    Book translatedBook = new Book();
 
-        // TODO: Add code here to populate translatedBook with a translation of the
-        // input book.
-        // Curent do-nothing code will return an empty book.
-        // Your code will need to call translate(String input) many times.
+    // Keep the same title but mark it as translated
+    translatedBook.setTitle(input.getTitle() + " (Pig Latin)");
 
-        return translatedBook;
+    // Loop through each line of the input book
+    for (int i = 0; i < input.getLineCount(); i++) {
+        String line = input.getLine(i);
+        String translatedLine = translate(line);
+        translatedBook.appendLine(translatedLine);
     }
 
+    return translatedBook;
+}
     public static String translate(String input) {
         System.out.println("  -> translate('" + input + "')");
 
-        String result = "";
+    if (input == null || input.isEmpty()) return input;
 
-        // TODO: translate a string input, store in result.
-        // The input to this function could be any English string.
-        // It may be made up of many words.
-        // This method must call translateWord once for each word in the string.
-        result = translateWord(input);
+    // Split the input into words (correct regex is \\s+, not //s+)
+    String[] words = input.split("\\s+");
 
-        return result;
+    // Use a StringBuilder to build the result string
+    StringBuilder result = new StringBuilder();
+
+    for (int i = 0; i < words.length; i++) {
+        String word = words[i];
+
+        // Translate each word
+        String processedWord = translateWord(word);
+        result.append(processedWord);
+
+        // Add space between words, but not after the last one
+        if (i < words.length - 1) {
+            result.append(" ");
+        }
     }
+
+    // Return the final translated string
+    return result.toString();
+}
+    
 
     private static String translateWord(String input) {
         System.out.println("  -> translateWord('" + input + "')");
-
+    if (input == null || input.isEmpty()) return input;
         String result = "";
+        //standized to lowercase
+        String word = input.toLowerCase();
 
-        // TODO: Replace this code to correctly translate a single word.
-        // Start here first!
-        // This is the first place to work.
-        result = input; // delete this line
+        // defineing vowels
+        String vowels = "aeiou";
 
-        return result;
+        //if first letter vowel
+        if (vowels.indexOf(word.charAt(0)) != -1) {
+            return word + "way";
+        }
+
+        //or find where vowel appears
+        int firstVowelIndex = -1;
+        for (int i = 0; i < word.length(); i++ ) {
+            if (vowels.indexOf(word.charAt(i)) != -1) {
+                firstVowelIndex = i;
+                break;
+            }
+        }
+
+        // if no vowel
+        if ( firstVowelIndex == -1) {
+            return word + "ay";
+        }
+
+        String s = word.substring(0, firstVowelIndex);
+        String e = word.substring(firstVowelIndex);
+    
+        return e + s + "ay";
     }
 
     // Add additonal private methods here.

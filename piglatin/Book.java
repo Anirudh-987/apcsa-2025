@@ -10,7 +10,7 @@ public class Book {
     private ArrayList<String> text = new ArrayList<String>();
 
     Book() {
-        // Empty book - no code needed here.
+        
     }
 
     // Helper to debug code
@@ -47,31 +47,59 @@ public class Book {
     }
 
     public void readFromString(String title, String string) {
-        // load a book from an input string.
-        this.title = title;
+           this.title = title;
+    Scanner scanner = new Scanner(string);
 
-        // TODO: use Scanner to populate the book
-        // use: text.add(line) to add a line to the book.
+    while (scanner.hasNextLine()) {
+        text.add(scanner.nextLine());
+    }
+
+    scanner.close();
     }
 
     public void readFromUrl(String title, String url) {
-        // load a book from a URL.
-        // https://docs.oracle.com/javase/tutorial/networking/urls/readingURL.html
-        this.title = title;
+       this.title = title;
+
 
         try {
-            URL bookUrl = URI.create(url).toURL();
-            // TODO: use Scanner to populate the book
-            // Scanner can open a file on a URL like this:
-            // Scanner(bookUrl.openStream())
-            // use: text.add(line) to add a line to the book.
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        URL bookUrl = URI.create(url).toURL();
+        Scanner scanner = new Scanner(bookUrl.openStream());
+
+        boolean startReading = false;
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+
+            // Start only when actual book begins
+            if (line.contains("*** START OF")) {
+                startReading = true;
+                continue;
+            }
+
+            // Stop when book ends
+            if (line.contains("*** END OF")) {
+                break;
+            }
+
+            // Only add lines that are part of the book
+            if (startReading) {
+                text.add(line);
+            }
         }
+        scanner.close();
+    } catch (IOException ex) {
+        ex.printStackTrace();
+    }
     }
 
     void writeToFile(String name) {
-        // TODO: Add code here to write the contents of the book to a file.
-        // Must write to file using provided name.
+       try (BufferedWriter writer = new BufferedWriter(new FileWriter(name))) {
+        for (String line : text) {
+            writer.write(line);
+            writer.newLine();
+        }
+        System.out.println("Book saved as " + name);
+    } catch (IOException ex) {
+        ex.printStackTrace();
+    }
     }
 }
