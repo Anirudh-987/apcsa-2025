@@ -46,42 +46,46 @@ public class PigLatinTranslator {
     
 
     private static String translateWord(String input) {
-        System.out.println("  -> translateWord('" + input + "')");
-    if (input == null || input.isEmpty()) return input;
-        String result = "";
-        //standized to lowercase
-        String word = input.toLowerCase();
+       if (input == null || input.isEmpty()) return input;
 
-        // defineing vowels
-        String vowels = "aeiou";
+    // Extract punctuation at the end
+    String punctuation = "";
+    if (!Character.isLetterOrDigit(input.charAt(input.length() - 1))) {
+        punctuation = "" + input.charAt(input.length() - 1);
+        input = input.substring(0, input.length() - 1);
+    }
 
-        //if first letter vowel
-        if (vowels.indexOf(word.charAt(0)) != -1) {
-            return word + "way";
-        }
+    boolean capitalized = Character.isUpperCase(input.charAt(0));
+    String word = input.toLowerCase();
+    String vowels = "aeiou";
 
-        //or find where vowel appears
+    if (vowels.indexOf(word.charAt(0)) != -1) {
+        word = word + "ay";  // vowel-start words
+    } else {
         int firstVowelIndex = -1;
-        for (int i = 0; i < word.length(); i++ ) {
+        for (int i = 0; i < word.length(); i++) {
             if (vowels.indexOf(word.charAt(i)) != -1) {
                 firstVowelIndex = i;
                 break;
             }
         }
 
-        // if no vowel
-        if ( firstVowelIndex == -1) {
-            return word + "ay";
+        if (firstVowelIndex == -1) {
+            word = word + "ay";  // no vowel
+        } else {
+            String start = word.substring(0, firstVowelIndex);
+            String end = word.substring(firstVowelIndex);
+            word = end + start + "ay";
         }
-
-        String s = word.substring(0, firstVowelIndex);
-        String e = word.substring(firstVowelIndex);
-    
-        return e + s + "ay";
     }
 
-    // Add additonal private methods here.
-    // For example, I had one like this:
-    // private static String capitalizeFirstLetter(String input)
+    // Restore capitalization
+    if (capitalized) {
+        word = Character.toUpperCase(word.charAt(0)) + word.substring(1);
+    }
+
+    // Reattach punctuation
+    return word + punctuation;
+}
 
 }
