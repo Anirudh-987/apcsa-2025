@@ -27,7 +27,7 @@ public class Deck {
             cards[i] = cards[j];
             cards[j] = temp;
         }
-        index = 0; // reset draw position
+        index = 0; // reset draw positiona
     }
 
     public void cut(int pos) {
@@ -36,7 +36,7 @@ public class Deck {
         Card[] newDeck = new Card[52];
         int p = 0;
 
-        // cards from pos to end first
+        // cards from pos to end firstsd
         for (int i = pos; i < 52; i++) {
             newDeck[p++] = cards[i];
         }
