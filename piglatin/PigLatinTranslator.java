@@ -1,95 +1,111 @@
 package piglatin;
 
 public class PigLatinTranslator {
+public static Book translate(Book input) {
 
-    public static Book translate(Book input) {
-        Book translatedBook = new Book();
+Book translatedBook = new Book();
 
-        for (int i = 0; i < input.getLineCount(); i++) {
-            String line = input.getLine(i);
-            String translatedLine = translate(line);
-            translatedBook.appendLine(translatedLine);
-        }
-
-        return translatedBook;
-    }
-
-    public static String translate(String input) {
-        if (input.trim().isEmpty()) return "";
-
-        // Split sentence into words while keeping punctuation attached
-        String[] words = input.split(" ");
-        StringBuilder translatedSentence = new StringBuilder();
-
-        for (int i = 0; i < words.length; i++) {
-            String word = words[i];
-            String translatedWord = translateWord(word);
-            translatedSentence.append(translatedWord);
-
-            // Add space between words (but not after last)
-            if (i < words.length - 1) {
-                translatedSentence.append(" ");
-            }
-        }
-
-        return translatedSentence.toString();
-    }
-
-    // Helper: translate a *single word* to Pig Latin
-    private static String translateWord(String input) {
-        if (input.trim().isEmpty()) return "";
-
-        // Separate punctuation (.,!?)
-        String punctuation = "";
-        if (!Character.isLetterOrDigit(input.charAt(input.length() - 1))) {
-            punctuation = input.substring(input.length() - 1);
-            input = input.substring(0, input.length() - 1);
-        }
-
-        // Save capitalization pattern
-        boolean[] caps = new boolean[input.length()];
-        for (int i = 0; i < input.length(); i++) {
-            caps[i] = Character.isUpperCase(input.charAt(i));
-        }
-
-        // Lowercase for processing
-        String lower = input.toLowerCase();
-
-        // Find first vowel
-        int firstVowel = -1;
-        for (int i = 0; i < lower.length(); i++) {
-            if ("aeiou".indexOf(lower.charAt(i)) != -1) {
-                firstVowel = i;
-                break;
-            }
-        }
-
-        String result;
-        if (firstVowel == 0) {
-            result = lower + "ay";
-        } else if (firstVowel > 0) {
-            result = lower.substring(firstVowel) + lower.substring(0, firstVowel) + "ay";
-        } else {
-            result = lower + "ay"; // no vowel
-        }
-
-        // Restore capitalization pattern (wrap around if necessary)
-      StringBuilder finalWord = new StringBuilder();
-for (int i = 0; i < result.length(); i++) {
-    char c = result.charAt(i);
-    if (Character.isLetter(c)) {
-        // Map capitalization from original word (loop if result is longer)
-        int sourceIndex = i % caps.length;
-        // Keep "ay" always lowercase
-        if (i >= result.length() - 2 && result.endsWith("ay")) {
-            finalWord.append(Character.toLowerCase(c));
-        } else {
-            finalWord.append(caps[sourceIndex] ? Character.toUpperCase(c) : Character.toLowerCase(c));
-        }
-    } else {
-        finalWord.append(c);
-    }
+int len = input.getLineCount();
+for(int i = 0; i < len; i++) {
+String line = input.getLine(i);
+String translatedLine = translate(line);
+translatedBook.appendLine(translatedLine);
 }
-        return finalWord.toString() + punctuation;
-    }
+return translatedBook;
+}
+
+public static String translate(String input) {
+System.out.println(" -> translate('" + input + "')");
+
+String result = "";
+
+// Split input into seperate words
+for(String word : input.split(" ")) {
+result += " " + translateWord(word);
+}
+
+return result.trim();
+}
+
+private static String translateWord(String input) {
+System.out.println(" -> translateWord('" + input + "')");
+
+String result = "";
+
+// Check for empty string
+if (input == null || input.trim().length() == 0){
+return "";
+}
+
+// All the variables
+int vowelIndex = 0;
+int puncIndex = 0;
+boolean hasPunc = false;
+String firstLetter = input.substring(0, 1);
+
+if (isVowel(firstLetter)){
+result = input + "ay";
+}
+// Find first vowel
+for (int i = 0; i < input.length(); i++){
+if (isVowel(input.substring(i, i + 1))){
+vowelIndex = i;
+break;
+}
+}
+
+// Translates to pig latin
+String start = input.substring(0, vowelIndex);
+String rest = input.substring(vowelIndex);
+result = rest + start.toLowerCase() + "ay";
+
+// Check for punctuation
+if (result.indexOf(".") != -1){
+hasPunc = true;
+puncIndex = result.indexOf(".");
+} else if (result.indexOf("!") != -1){
+hasPunc = true;
+puncIndex = result.indexOf("!");
+} else if (result.indexOf("?") != -1){
+hasPunc = true;
+puncIndex = result.indexOf("?");
+} else if (result.indexOf(",") != -1){
+hasPunc = true;
+puncIndex = result.indexOf(",");
+} else if (result.indexOf(";") != -1){
+hasPunc = true;
+puncIndex = result.indexOf(";");
+} else if (result.indexOf(":") != -1){
+hasPunc = true;
+puncIndex = result.indexOf(":");
+}
+
+// Punctuaction
+if (hasPunc){
+result = result.substring(0, puncIndex) + result.substring(puncIndex + 1) + result.charAt(puncIndex);
+}
+// Capitalization
+if (Character.isUpperCase(input.charAt(0))){
+result = result.substring(0, 1).toUpperCase() + result.substring(1);
+}
+return result;
+}
+
+// Check if letter is a vowel
+public static boolean isVowel(String letter){
+String vowels = "aeiouAEIOU";
+if (vowels.indexOf(letter) != -1) {
+return true;
+}
+return false;
+}
+
+// Check if letter is a punctuation
+public static boolean isPunc(String letter){
+String punc = ".!?";
+if (punc.indexOf(letter) != -1){
+return true;
+}
+return false;
+}
 }
