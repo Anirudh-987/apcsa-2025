@@ -3,15 +3,18 @@ package piglatin;
 public class PigLatinTranslator {
 public static Book translate(Book input) {
 
-Book translatedBook = new Book();
+    Book translatedBook = new Book();
 
-int len = input.getLineCount();
-for(int i = 0; i < len; i++) {
-String line = input.getLine(i);
-String translatedLine = translate(line);
-translatedBook.appendLine(translatedLine);
-}
-return translatedBook;
+    // Now works because Book has setTitle/getTitle
+    translatedBook.setTitle(input.getTitle());
+
+    int len = input.getLineCount();
+    for(int i = 0; i < len; i++) {
+        String line = input.getLine(i);
+        String translatedLine = translate(line); // your existing translation logic
+        translatedBook.appendLine(translatedLine);
+    }
+    return translatedBook;
 }
 
 public static String translate(String input) {
