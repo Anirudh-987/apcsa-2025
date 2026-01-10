@@ -12,6 +12,6 @@ public class Main {
             number++;
                 
         }
-        
+         System.out.println(amount);
     }
 }
